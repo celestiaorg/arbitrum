@@ -96,6 +96,15 @@ struct ArbCoreConfig {
     // Whether to lazy load archive queries
     bool lazy_load_archive_queries{false};
 
+    // Do complete prune on startup
+    bool checkpoint_prune_on_startup{false};
+
+    // Number of seconds to keep checkpoints
+    uint64_t checkpoint_pruning_age_seconds{0};
+
+    // Maximum number of checkpoints to prune at a time
+    uint64_t checkpoint_max_to_prune{0};
+
     ArbCoreConfig() = default;
 };
 

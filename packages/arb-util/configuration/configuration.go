@@ -62,6 +62,9 @@ type Core struct {
 	CheckpointLoadGasCost     int           `koanf:"checkpoint-load-gas-cost"`
 	CheckpointLoadGasFactor   int           `koanf:"checkpoint-load-gas-factor"`
 	CheckpointMaxExecutionGas int           `koanf:"checkpoint-max-execution-gas"`
+	CheckpointMaxToPrune      int           `koanf:"checkpoint-max-to-prune"`
+	CheckpointPruningAge      time.Duration `koanf:"checkpoint-pruning-age"`
+	CheckpointPruneOnStartup  bool          `koanf:"checkpoint-prune-on-startup"`
 	Test                      CoreTest      `koanf:"test"`
 	Debug                     bool          `koanf:"debug"`
 	IdleSleep                 time.Duration `koanf:"idle-sleep"`
@@ -489,6 +492,9 @@ func ParseNonRelay(ctx context.Context, f *flag.FlagSet, defaultWalletPathname s
 	f.Int("core.checkpoint-load-gas-cost", 250_000_000, "running machine for given gas takes same amount of time as loading database entry")
 	f.Int("core.checkpoint-load-gas-factor", 4, "factor to weight difference in database checkpoint vs cache checkpoint")
 	f.Int("core.checkpoint-max-execution-gas", maxExecutionGas, "maximum amount of gas any given checkpoint is allowed to execute")
+	f.Int("core.checkpoint-max-to-prune", 0, "number of checkpoints to delete at a time")
+	f.Duration("core.checkpoint-pruning-age", 0, "how long to keep snapshots, 0 to disable")
+	f.Bool("core.checkpoint-prune-on-startup", false, "perform full database pruning on startup")
 
 	f.Bool("core.debug", false, "print extra debug messages in arbcore")
 
